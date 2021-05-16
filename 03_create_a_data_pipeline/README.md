@@ -33,3 +33,13 @@ There are three types of operators:
 1. **Action** operators execute an action (for example, the `Python` operator, the `Batch` operator, etc)
 2. **Transfer** operators transfer data from a source to a destination
 3. **Sensor** operators are used to wait for a condition to be met before moving on to the next task
+
+## Testing tasks
+
+Each time we add a task to the data pipeline, we need to test it. To test a task run
+
+``` zsh
+airflow tasks test <dag_id> <task_id> <execution_date_in_yyyy-mm-dd_format>
+```
+
+This will test only the task. It will not check for dependencies, nor will it store any metadata.
