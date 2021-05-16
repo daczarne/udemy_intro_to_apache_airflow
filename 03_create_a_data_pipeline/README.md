@@ -54,3 +54,9 @@ Once you've finished writing the DAG head on to the Airflow UI and turn it on to
 - `schedule_interval` defines the frequency at which the data pipeline will be triggered
 
 The DAG will be scheduled once the `start_date` + `schedule_interval` has elapsed. And you'll get an `execution_date` equal to the beginning of that date.
+
+All dates in Airflow are in UTC timezone. This can be changed from the `airflow.cfg` file, under the `default_ui_timezone` and `default_timezone` parameters. Changing them is not advisable.
+
+## Backfilling and catchup
+
+If the `start_date` is in the past, you need to backfill your DAG run. Airflow will automatically run all non-triggered DAG runs in order to catch-up to the current date, starting from the last execution date. This behavior can be controlled by the `catchup` parameter in the DAG definition. By default this parameter is set to `True`.
