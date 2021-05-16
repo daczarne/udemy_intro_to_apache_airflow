@@ -1,5 +1,6 @@
 from airflow.models import DAG
 from airflow.providers.sqlite.operators.sqlite import SqliteOperator
+from airflow.providers.http.sensors.http import HttpSensor
 from datetime import datetime
 
 #* Dictionary of default arguments. This arguments will apply to all tasks in the data pipeline.
@@ -19,7 +20,8 @@ with DAG(
 	default_args = default_arguments,
 	catchup = False
 ) as dag:
-	#* First task is to create the user table in the SQLite DB. Since we are going to interact with a SQLite DB, we need to use the SQLite Operator.
+
+	#! First task is to create the user table in the SQLite DB. Since we are going to interact with a SQLite DB, we need to use the SQLite Operator.
 	creating_table = SqliteOperator(
 		#* First we need to setup a task ID that is unique among the tasks in this data pipeline
 		task_id = 'creating_table',
@@ -37,4 +39,19 @@ with DAG(
 			);
 		"""
 	)
+
+	#! Second task is to check if the API is available using the HTTP sensor
+	is_api_available = HttpSensor(
+		task_id = 'is_api_available',
+		#* Connection name. The connection in this case will be the url of the API to be checked for availability.
+		http_conn_id = 'user_api',
+		#* Specify the endpoint
+		endpoint = 'api/'
+	)
+
+	#! Third task is to extracting the user from the API
+	extracting_user = HttpOperator(
+		
+	)
+
 
