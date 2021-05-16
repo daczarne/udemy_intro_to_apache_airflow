@@ -23,7 +23,7 @@ with DAG(
 	creating_table = SqliteOperator(
 		#* First we need to setup a task ID that is unique among the tasks in this data pipeline
 		task_id = 'creating_table',
-		#* Make a DB connector
+		#* Specify a DB connector. This needs to use one of the connectors specified on your Airflow console
 		sqlite_conn_id = 'db_sqlite',
 		#* Specify the SQL query to be run
 		sql = """
