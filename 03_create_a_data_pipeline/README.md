@@ -50,3 +50,7 @@ Once you've finished writing the DAG head on to the Airflow UI and turn it on to
 
 ## Scheduling DAGs
 
+- `start_date` defines when the task will start being scheduled
+- `schedule_interval` defines the frequency at which the data pipeline will be triggered
+
+The DAG will be scheduled once the `start_date` + `schedule_interval` has elapsed. And you'll get an `execution_date` equal to the beginning of that date.
