@@ -18,7 +18,7 @@ All the python files need to be placed in there. Each file will represent a DAG.
 - `is_api_available` will check if the API from where we are going to fetch the users is available. To do this, we'll use the `HTTP` sensor.
 - `extracting_user` will fetch the user. This will be done with the `HTTP` operator.
 - `processing_user` will run some python function to process the data that the API sent. This will be done using the `Python` operator.
-- `storing_user` will store the processed user in the table that we created. To do this, we will use the `Batch` operator.
+- `storing_user` will store the processed user in the table that we created. To do this, we will use the `Bash` operator yo execute a bash command to store data into the SQLite DB.
 
 We'll start with creating a `user_processing.py` file in which we will define the DAG.
 

@@ -3,6 +3,7 @@ from airflow.providers.sqlite.operators.sqlite import SqliteOperator
 from airflow.providers.http.sensors.http import HttpSensor
 from airflow.providers.http.operators.http import SimpleHttpOperator
 from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
 from datetime import datetime
 from pandas import json_normalize
 import json
@@ -100,4 +101,13 @@ with DAG(
 		#* Specify the python function that we want to call. This function needs to be defined.
 		python_callable = _processing_user
 	)
+
+	#! Lastly, add the user to the users table. To do this we need to use the Bash operator to write to the SQLite DB
+	storing_user = BashOperator(
+		#* Set the task ID
+		task_id = 'storing_user',
+		#* Bash command to execute
+		bash_command = 'echo -e ".separator ","\n. import /tmp/processed_user.csv users" | sqlite3 /home/airflow/airflow/airflow.db'
+	)
+
 
