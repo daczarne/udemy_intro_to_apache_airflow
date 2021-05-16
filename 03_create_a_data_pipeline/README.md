@@ -43,3 +43,10 @@ airflow tasks test <dag_id> <task_id> <execution_date_in_yyyy-mm-dd_format>
 ```
 
 This will test only the task. It will not check for dependencies, nor will it store any metadata.
+
+## Triggering tasks
+
+Once you've finished writing the DAG head on to the Airflow UI and turn it on to trigger its execution. Sometimes tasks might fail. For example, if one of the tasks is to create a table, then the task will only succeed the first time it runs since all other times the table will already exist. This is why it's important to make sure that tasks are idempotent.
+
+## Scheduling DAGs
+
