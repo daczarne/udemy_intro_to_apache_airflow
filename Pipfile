@@ -7,6 +7,7 @@ name = "pypi"
 wheel = "*"
 apache-airflow = "==2.0.0"
 apache-airflow-providers-sqlite = "*"
+apache-airflow-providers-http = "*"
 
 [dev-packages]
 
