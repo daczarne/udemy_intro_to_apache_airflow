@@ -110,4 +110,5 @@ with DAG(
 		bash_command = 'echo -e ".separator ","\n. import /tmp/processed_user.csv users" | sqlite3 /home/airflow/airflow/airflow.db'
 	)
 
-
+	#! Now that all the tasks have been defined, we need to define the dependencies between them. To do so we'll list the tasks and include >> signs between them, going from first task to last.
+	creating_table >> is_api_available >> extracting_user >> processing_user >> storing_user
