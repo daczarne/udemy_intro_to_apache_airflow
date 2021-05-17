@@ -81,3 +81,76 @@ airflow db init
 ```
 
 and create a new user. Then re-launch the Web Server and Scheduler.
+
+## Celery Executor
+
+The `LocalExecutor` is limited by the resources in the machine you are running it. To overcome this limitations you can use the `CeleryExecutor` or the `KubernetesExecutor`. All executors use the Queue to execute the tasks in the correct order. Every time a task needs to be executed it will be pushed inside the Queue. When the executor is ready to execute the task, it will pull it from the Queue. When using these executors, they are pulled by worker machines (not sub-processes).
+
+The `CeleryExecutor` is a distributed task system. The more machines you use, the more tasks that can be run in tandem. With this executor the Queue is outside the executor and is third-party provided (in this case by Redis). This third-party tool needs to be installed and set-up.
+
+![](airflow/img/celery_executor.png)
+
+With Celery, each worker has a parameter called `worker_concurrency` that determines the number of tasks that can be run at the same time per worker machine. This needs to be defined in the `airflow.cfg` file.
+
+Since multiple machines are going to be used as workers, each of them needs to be configured and have the necessary dependencies installed in order to be able to run the tasks.
+
+To configure the executor make sure you've stopped the servers and install the Celery package by running
+
+``` zsh
+pipenv install 'apache-airflow[celery]'
+```
+
+Now we need to install Redis. First update the packages by running
+
+``` zsh
+sudo apt update
+```
+
+Then install Redis by running
+
+``` zsh
+sudo apt install redis-server
+```
+
+Now modify the Redis configuration to use it as a service. To open the configuration file run
+
+``` zsh
+sudo nano /etc/redis/redis.conf
+```
+
+Near the bottom of the file change the value of `supervised no` to `supervised systemd`. Exit the file with `Ctrl + x` and save it with `y`, and press `Enter`. Now restart Redis by running
+
+``` zsh
+sudo systemctl restart redis.service
+```
+
+To check if Redis is running use the command
+
+``` zsh
+sudo systemctl status redis.service
+```
+
+Now open the `airflow.cfg` file and change the `executor = CeleryExecutor` variable. Now make sure to set the following parameters:
+
+- change `broker_url` from `redis://redis:6379/0` to `redis://localhost:6379/0` if you are running Airflow locally
+- change `result_backend` from `db+postgresql://postgres:airflow@postgres/airflow` to `db+postgresql://postgres:postgres@localhost/postgres`
+
+Lastly, install the Redis package.
+
+``` zsh
+pipenv install 'apache-airflow[redis]'
+```
+
+You can now use Flower to monitor the workers by running 
+
+``` zsh
+airflow celery flower
+```
+
+To add a new worker run
+
+``` zsh
+airflow celery worker
+```
+
+This command needs to be run on each machine that you want to add to your Celery cluster, since it will signal that that machine is an available worker.
