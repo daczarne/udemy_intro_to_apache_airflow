@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 wheel = "*"
-apache-airflow = "==2.0.0"
+apache-airflow = {extras = ["postgres"], version = "*"}
 apache-airflow-providers-sqlite = "*"
 apache-airflow-providers-http = "*"
 pandas = "*"
