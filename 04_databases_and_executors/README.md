@@ -1,5 +1,11 @@
 # Databases and Executors
 
+[The default configuration](#the-default-configuration)  
+[Installing PostgreSQL](#installing-postgresql)  
+[Local executor](#local-executor)  
+[Celery executor](#celery-executor)  
+[Concurrency](#concurrency)  
+
 ## The default configuration
 
 By default, Airflow uses the `SequentialExecutor` to run tasks. If two tasks have the same priority there's no way of knowing which one will be executed first (they should be parallelized). There are two parameters in Airflow that allow you to configure the executor: `sql_alchemy_conn` corresponds to the default Metastore path, and `executor`.
@@ -154,3 +160,6 @@ airflow celery worker
 ```
 
 This command needs to be run on each machine that you want to add to your Celery cluster, since it will signal that that machine is an available worker.
+
+## Concurrency
+
