@@ -94,7 +94,7 @@ The `LocalExecutor` is limited by the resources in the machine you are running i
 
 The `CeleryExecutor` is a distributed task system. The more machines you use, the more tasks that can be run in tandem. With this executor the Queue is outside the executor and is third-party provided (in this case by Redis). This third-party tool needs to be installed and set-up.
 
-![](airflow/img/celery_executor.png)
+![](img/celery_executor.png)
 
 With Celery, each worker has a parameter called `worker_concurrency` that determines the number of tasks that can be run at the same time per worker machine. This needs to be defined in the `airflow.cfg` file.
 
