@@ -163,3 +163,10 @@ This command needs to be run on each machine that you want to add to your Celery
 
 ## Concurrency
 
+Some important parameters to control how tasks are executed in the `airflow.cfg` file are:
+
+- `parallelism`: total number of tasks that can be executed in the entire Airflow instance. By default it's set to 32.
+- `dag_concurrency`: total number of tasks to be executed in each specific DAG. By default it's set to 16. Should be greater or equal to `parallelism` to have any effect. This parameter affects all DAGs.
+- `concurrency`: is a parameter that can be set at the DAG object level (i.e. in the python script) to set the maximum number of concurrent tasks for that DAG specifically. It's the same as `dag_concurrency` but for that DAG only.
+- `max_active_runs_per_dag`: sets the maximum number of DAG runs that be run concurrently for the same DAG. Default is 16. This applies to all DAGs.
+- `max_active_runs`: is a Python object parameter that can be set to determine the maximum number of DAG runs for that specific DAG.
