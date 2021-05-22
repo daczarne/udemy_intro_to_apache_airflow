@@ -20,4 +20,6 @@ SubDAGs are not recommended to be used due to:
 
 Task groups are much easier than SubDAGs to build. We don't need a function that returns a DAG. Just invoke the `TaskGroup` operator. Give the task group an ID as an argument to the group, and include the tasks as part of the object.
 
+We can use sub tasks in task groups. Tasks under different groups can have the same ID, since their actual ID will be `group_task_name.task_id`.
+
 ## XComs
