@@ -39,3 +39,7 @@ If we push two different XComs with the same key but different values, the last 
 Now, to pull the value by a task we use the `xcom_pull` method of the `ti`. This method takes two arguments. The `key` is the name of the XCom to be pulled, and a list of `task_ids` which XComs we want to pull.
 
 Some operators will create XComs by default (such as the `BashOperator`). To modify that behavior, change the value of the parameter `do_xcom_push` to `False`.
+
+## Branching
+
+Sometimes we need to choose one task or another depending on the value of an XCom. To do so, we use the `BranchPythonOperator`. This operator allows us to execute one task or another by returning the task ID of the task to be executed.
