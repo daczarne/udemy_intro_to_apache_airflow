@@ -43,3 +43,9 @@ Some operators will create XComs by default (such as the `BashOperator`). To mod
 ## Branching
 
 Sometimes we need to choose one task or another depending on the value of an XCom. To do so, we use the `BranchPythonOperator`. This operator allows us to execute one task or another by returning the task ID of the task to be executed.
+
+We could return multiple task IDs from the `BranchPythonOperator`. To do so, just specify the return value as a list. All tasks in that list will be executed.
+
+## Trigger rules
+
+We can also want to execute other tasks after the branched step in our pipeline. To do so, we need to change the Trigger Rules. By default, all task use the trigger rule `all_success` which means that all previous tasks must have been executed successfully for the following task in the data pipeline to be executed. Similarly, the `all_failed` trigger rule will execute the task if all dependent tasks have failed.
