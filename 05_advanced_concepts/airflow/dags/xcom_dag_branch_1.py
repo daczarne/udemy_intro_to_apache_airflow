@@ -30,7 +30,8 @@ def _choose_best_model(ti):
 	print('choose best model')
 
 
-def _is_accurate():
+def _is_accurate(ti):
+	ti.xcom_pull(key = 'model_accura')
 	return 'accurate'
 
 
