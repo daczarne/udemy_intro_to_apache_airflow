@@ -26,11 +26,11 @@ class ElasticHook(BaseHook):
 		return self.es.info()
 
 	#* Define the index
-	def set_index(self):
+	def set_index(self, index):
 		self.index = index
 
 	#* Add document to the index
 	def add_doc(self, index, doc_type, doc):
 		self.set_index(index)
-		res = self.es.index(index = index, doc_type = doc_type, doc = doc)
+		res = self.es.index(index = index, doc_type = doc_type, body = doc)
 		return res
