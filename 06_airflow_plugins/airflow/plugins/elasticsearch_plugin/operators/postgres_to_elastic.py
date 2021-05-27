@@ -22,7 +22,7 @@ class PostgresToElasticOperator(BaseOperator):
 		with closing(pg.get_conn()) as conn:
 			with closing(conn.cursor()) as cur:
 				cur.itersize = 1000
-				cur.execute(sql)
+				cur.execute(self.sql)
 				for row in cur:
 					doc = json.dumps(row, indent = 2)
 					es.add_doc(index = self.index, doc_type = 'external', doc = doc)
