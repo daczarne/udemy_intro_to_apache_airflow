@@ -9,6 +9,7 @@ apache-airflow = {extras = ["redis"], version = "*"}
 apache-airflow-providers-sqlite = "*"
 apache-airflow-providers-http = "*"
 pandas = "*"
+elasticsearch = "*"
 
 [dev-packages]
 
