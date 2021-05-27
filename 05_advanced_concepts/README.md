@@ -49,3 +49,11 @@ We could return multiple task IDs from the `BranchPythonOperator`. To do so, jus
 ## Trigger rules
 
 We can also want to execute other tasks after the branched step in our pipeline. To do so, we need to change the Trigger Rules. By default, all task use the trigger rule `all_success` which means that all previous tasks must have been executed successfully for the following task in the data pipeline to be executed. Similarly, the `all_failed` trigger rule will execute the task if all dependent tasks have failed.
+
+Other rules include:
+
+- `all_done` allows for the execution of downstream tasks, whatever the status of the upstream task.
+- `one_success` will trigger the downstream task as soon as at least one upstream task succeeds.
+- `one_failed` will trigger the downstream task as soon as at least one upstream task fails.
+- `none_failed` will trigger the downstream task as soon as all upstream tasks have succeeded or have been skipped.
+- `none_failed_or_skipped` will trigger the downstream task as soon as all upstream tasks have not failed, but at least one upstream task has succeeded.
