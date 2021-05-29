@@ -46,3 +46,37 @@ Now, to run Airflow locally using this docker compose file we run:
 ``` zsh
 docker-compose -f docker-compose.yaml up -d
 ```
+
+Docker will start creating everything for you now. You'll know it's done when you see the following output:
+
+``` shell
+Creating airflow-local_postgres_1 ... done
+Creating airflow-local_redis_1    ... done
+Creating airflow-local_flower_1            ... done
+Creating airflow-local_airflow-scheduler_1 ... done
+Creating airflow-local_airflow-init_1      ... done
+Creating airflow-local_airflow-webserver_1 ... done
+Creating airflow-local_airflow-worker_1    ... done
+```
+
+To check what's running on the local Airflow instance, you can run the command:
+
+``` zsh
+docker ps
+```
+
+Your output should look something like this:
+
+``` shell
+CONTAINER ID   IMAGE                  COMMAND                  CREATED         STATUS                             PORTS                              NAMES
+356ef38da7eb   apache/airflow:2.1.0   "/usr/bin/dumb-init …"   4 minutes ago   Up 3 minutes (healthy)             8080/tcp                           airflow-local_airflow-worker_1
+330df0729306   apache/airflow:2.1.0   "/usr/bin/dumb-init …"   4 minutes ago   Up 25 seconds (health: starting)   0.0.0.0:8080->8080/tcp             airflow-local_airflow-webserver_1
+d830875e346a   apache/airflow:2.1.0   "/usr/bin/dumb-init …"   4 minutes ago   Up 3 minutes (healthy)             8080/tcp                           airflow-local_airflow-scheduler_1
+314115faf0ee   apache/airflow:2.1.0   "/usr/bin/dumb-init …"   4 minutes ago   Up 3 minutes (healthy)             0.0.0.0:5555->5555/tcp, 8080/tcp   airflow-local_flower_1
+e5be6c8f9fe8   postgres:13            "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes (healthy)             5432/tcp                           airflow-local_postgres_1
+c4ca5b54cb81   redis:latest           "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes (healthy)             0.0.0.0:6379->6379/tcp             airflow-local_redis_1
+```
+
+That's the list of containers that are running on the local instance, along with some information on them (like the image, how long ago they were created, etc.). If you now navigate to `localhost:8080` on your browser, you should be able to access the Airflow UI.
+
+## Local executor
