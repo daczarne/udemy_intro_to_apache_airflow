@@ -79,4 +79,17 @@ c4ca5b54cb81   redis:latest           "docker-entrypoint.s…"   4 minutes ago  
 
 That's the list of containers that are running on the local instance, along with some information on them (like the image, how long ago they were created, etc.). If you now navigate to `localhost:8080` on your browser, you should be able to access the Airflow UI.
 
+To stop docker compose run `docker-compose stop`. You should see an output that looks like the following:
+
+``` shell
+Stopping airflow-local_airflow-worker_1    ... done
+Stopping airflow-local_airflow-webserver_1 ... done
+Stopping airflow-local_airflow-scheduler_1 ... done
+Stopping airflow-local_flower_1            ... done
+Stopping airflow-local_postgres_1          ... done
+Stopping airflow-local_redis_1             ... done
+```
+
 ## Local executor
+
+To use the `LocalExecutor` just change `AIRFLOW__CORE__EXECUTOR: CeleryExecutor` to `AIRFLOW__CORE__EXECUTOR: LocalExecutor`. Comment out the `AIRFLOW__CELERY__RESULT_BACKEND` and `AIRFLOW__CELERY__BROKER_URL` since they are not going to be used. Since we don't need `redis` either, you can comment out that as well. Same is true for the `airflow-worker` and `flower` services.
