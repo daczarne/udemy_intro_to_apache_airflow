@@ -5,4 +5,5 @@
 *.sql linguist-language=sql
 *.svg linguist-detectable
 *.yml linguist-detectable
+*.yaml linguist-detectable
 *.mako linguist-vendored
